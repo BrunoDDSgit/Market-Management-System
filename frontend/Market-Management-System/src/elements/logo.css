@@ -1,0 +1,13 @@
+.container-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.texto-logo {
+    width: 200px;
+}
+
+.logo {
+    width: 100px;
+}

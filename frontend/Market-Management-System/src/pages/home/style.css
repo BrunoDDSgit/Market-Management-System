@@ -1,0 +1,146 @@
+:root {
+    --cor-principal: #a3b0d4;
+    --cor-secundaria: #545e79;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    overflow: hidden;
+}
+
+body {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.home-container {
+    outline-offset: 10px;
+    outline: white 2px solid;
+    background-color: white;
+    border-radius: 20px;
+    padding: 40px;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0px; /* deixar responsivo */
+}
+
+form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px;
+    border-radius: 20px;
+    gap: 30px; /* deixar responsivo */
+}
+
+div.campo {
+    position: relative;
+    width: 100%;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+}
+
+.campo input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  font-size: 16px;
+}
+
+.campo label {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    color: #999;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    padding: 0 4px;
+}
+
+.campo label:hover {
+  cursor: pointer;
+  color: black;
+}
+
+.campo:has(input:focus) label,
+.campo:has(input:valid) label {
+  top: -20px;
+  left: -5px;
+  font-size: 13px;
+  color: var(--cor-secundaria);
+}
+
+.botoes {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.botoes button {
+    font-weight: 500;
+    width: 45%;
+    color: white;
+    background-color: var(--cor-secundaria);
+    border: var(--cor-secundaria) solid 2px;
+    border-radius: 5px;
+    padding: 5px;
+    backface-visibility: hidden;
+    will-change: transform;
+    transition: background-color ease 500ms, transform ease 500ms;
+}
+
+.botoes button:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    color: var(--cor-secundaria);
+    background-color: white;
+}
+
+.form-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-text h1 {
+    color: var(--cor-secundaria);
+}
+
+.form-text p {
+    font-weight: 500;
+    color: var(--cor-principal);
+}
+
+.img-menu {
+    width: 650px;
+    height: 600px;
+}
+
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    padding: 50px;
+    gap: 50px;
+}
+
+input:focus {
+    color: var(--cor-principal);
+}
