@@ -5,9 +5,9 @@
 }
 
 .texto-logo {
-    width: 200px;
+    width: clamp(7.5em,14vw,14em);
 }
 
 .logo {
-    width: 100px;
+    width: clamp(3.7rem,7vw,7rem);
 }
