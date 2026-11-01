@@ -16,17 +16,19 @@ function Home() {
               <h1>Seja Bem Vindo</h1>
               <p>para cadastrar-se, insira as informações abaixo </p>
             </div>
-            <div className='campo'>
-              <input type="text" id="nome" name="nome" required/>
-              <label for="nome">Nome: </label>
-            </div>
-            <div className='campo'>
-              <input type="email" id="email" name="email" required/>
-              <label for="email">Email: </label>
-            </div>
-            <div className='campo'>
-              <input type="password" id="senha" name="senha" required/>
-              <label for="senha">Senha: </label>
+            <div className="campos">
+              <div className='campo'>
+                <input type="text" id="nome" name="nome" required/>
+                <label for="nome">Nome: </label>
+              </div>
+              <div className='campo'>
+                <input type="email" id="email" name="email" required/>
+                <label for="email">Email: </label>
+              </div>
+              <div className='campo'>
+                <input type="password" id="senha" name="senha" required/>
+                <label for="senha">Senha: </label>
+              </div>
             </div>
             <div className='botoes'>
               <button type="button">Cadastrar</button>
