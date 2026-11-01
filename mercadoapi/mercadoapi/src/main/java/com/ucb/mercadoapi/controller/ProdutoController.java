@@ -1,13 +1,11 @@
 package com.ucb.mercadoapi.controller;
 
 import com.ucb.mercadoapi.database.model.ProdutoEntity;
+import com.ucb.mercadoapi.dto.ProdutoDTO;
 import com.ucb.mercadoapi.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +20,24 @@ public class ProdutoController {
     @ResponseStatus(HttpStatus.OK)
     public List<ProdutoEntity> findAll() {
         return produtoService.findAll();
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProdutoEntity createProduct(@RequestBody ProdutoDTO produtoDTO) {
+        return produtoService.createProduct(produtoDTO);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProdutoEntity updateProduct(@PathVariable("id") Integer id,
+                                       @RequestBody ProdutoDTO produtoDTO) {
+        return produtoService.updateProduct(produtoDTO, id);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProduct(@PathVariable("id") Integer id) {
+        produtoService.removerProduto(id);
     }
 }
