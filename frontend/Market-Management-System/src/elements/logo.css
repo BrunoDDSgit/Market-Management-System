@@ -1,0 +1,13 @@
+.container-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.texto-logo {
+    width: clamp(7.5em,14vw,14em);
+}
+
+.logo {
+    width: clamp(3.7rem,7vw,7rem);
+}
