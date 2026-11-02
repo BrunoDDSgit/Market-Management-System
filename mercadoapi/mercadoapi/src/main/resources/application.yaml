@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: mercadoapi
+  datasource:
+    url: jdbc:mysql://localhost:3306/Market_Management_System?createDatabaseIfNotExist=true
+    username: ${DATABASE_USERNAME:root}
+    password: ${DATABASE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+#server.port=8080
