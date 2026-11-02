@@ -2,6 +2,7 @@ package com.ucb.mercadoapi.service;
 
 import com.ucb.mercadoapi.database.model.ProdutoEntity;
 import com.ucb.mercadoapi.dto.ProdutoDTO;
+import com.ucb.mercadoapi.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -104,10 +105,10 @@ public class ProdutoService {
         return novoProduto;
     }
 
-    public ProdutoEntity updateProduct(ProdutoDTO produtoDTO, Integer id) {
+    public ProdutoEntity updateProduct(ProdutoDTO produtoDTO, Integer id) throws NotFoundException {
         ProdutoEntity produto = PRODUTOS.stream()
                 .filter(p -> p.getId().equals(id)).findFirst()
-                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+                .orElseThrow(() -> new NotFoundException("Produto não Encontrado"));
 
         produto.setNome(produtoDTO.getNome());
         produto.setValor(produtoDTO.getValor());
