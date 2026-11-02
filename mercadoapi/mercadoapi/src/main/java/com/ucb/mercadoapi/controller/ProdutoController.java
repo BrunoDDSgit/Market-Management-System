@@ -2,6 +2,7 @@ package com.ucb.mercadoapi.controller;
 
 import com.ucb.mercadoapi.database.model.ProdutoEntity;
 import com.ucb.mercadoapi.dto.ProdutoDTO;
+import com.ucb.mercadoapi.exception.NotFoundException;
 import com.ucb.mercadoapi.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class ProdutoController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public ProdutoEntity updateProduct(@PathVariable("id") Integer id,
-                                       @RequestBody ProdutoDTO produtoDTO) {
+                                       @RequestBody ProdutoDTO produtoDTO) throws NotFoundException {
         return produtoService.updateProduct(produtoDTO, id);
     }
 
