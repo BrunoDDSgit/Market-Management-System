@@ -1,0 +1,70 @@
+Aprendizados Spring Boot
+
+package com.ucb.mercadoapi.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/v1/hello")
+public class HelloWorldController {
+
+// Existem varias formas de montar um controller
+
+//    @GetMapping
+//    public String helloWorld(){
+//        return "Hello World";
+//    }
+
+//    @GetMapping
+//    public ResponseEntity<String> helloWorld(){
+//        return ResponseEntity.ok("Hello World");
+//    }
+
+//    @GetMapping
+//    public ResponseEntity<String> helloWorld2(){
+//        return new  ResponseEntity<>("Hello World", HttpStatus.OK);
+//    }
+
+
+    //Há dois métodos iguais (get), mas com rotas diferentes
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public String get() {
+        return "GET | Hello World!";
+    }
+
+    @GetMapping("/novo")
+    @ResponseStatus(HttpStatus.OK)
+    public String getNovaRota() {
+        return " GET | Hello World! com rota adicionando /novo!";
+    }
+
+    //Não tem problema diferentes tipos de métodos pra mesma rota.
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public String Post() {
+        return "POST | Hello World! Rota normal";
+    }
+
+    //Path variables - sempre são obrigatórios
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public String getPathVariable(@PathVariable("id") String id) {
+        return " GET | Hello World! "+id;
+    }
+
+    //Request Param - podemos definir se são obrigatórios ou não | padrão se não definido: obrigatório
+    @GetMapping("/request")
+    @ResponseStatus(HttpStatus.OK)
+    public String getRP(@RequestParam(value = "name", required = true) String name) {
+        return "GET | Hello World! "+ name;
+    }
+
+    //Request Body - Usado para Post, Put e Patch(mudança partcial)
+    @PostMapping("/request")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String PostRB(@RequestBody String body) { // da pra colocar como não obrigatorio
+        return "POST | Hello World! "+ body;
+    }
+}
