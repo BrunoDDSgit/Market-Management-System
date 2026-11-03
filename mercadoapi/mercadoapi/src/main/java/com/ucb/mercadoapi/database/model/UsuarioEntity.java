@@ -18,13 +18,14 @@ public class UsuarioEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // cuida da geração de ID de forma automática
-    private Integer id;
+    @Column(name = "ID_USUARIO")
+    private Integer idUsuario;
 
     @Column(nullable = false, length = 100)
     private String nome;
     @Column(nullable = false, length = 150, unique = true)
     private String email;
-    @Column(length = 15)
+    @Column(nullable = true, length = 15)
     private String telefone;
     @Column(nullable = false)
     private String senha;
@@ -34,6 +35,6 @@ public class UsuarioEntity {
     private LocalDateTime dataCadastro;
 
     @ManyToOne
-    @JoinColumn(name= "cargo_id")
-    private  CargoEntity cargo;
+    @JoinColumn(name= "ID_CARGO")
+    private CargoEntity cargo;
 }

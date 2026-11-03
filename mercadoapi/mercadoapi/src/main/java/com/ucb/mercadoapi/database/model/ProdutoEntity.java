@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "PRODUTO")
@@ -36,6 +38,9 @@ public class ProdutoEntity {
     private BigDecimal precoAtualProduto;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name= "ID_CATEGORIA")
     private CategoriaEntity categoria;
+
+    @OneToMany(mappedBy = "produto")
+    private Set<ProdutoVendaEntity> produtoVendas = new HashSet<ProdutoVendaEntity>();
 }
