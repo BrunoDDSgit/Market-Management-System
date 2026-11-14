@@ -1,0 +1,4 @@
+INSERT INTO CARGO (nome)
+VALUES
+('USER'),
+("ADMIN");

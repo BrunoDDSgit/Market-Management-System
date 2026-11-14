@@ -1,0 +1,4 @@
+INSERT INTO STATUS (nome)
+VALUES
+('ATIVO'),
+('INATIVO');

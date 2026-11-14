@@ -1,6 +1,6 @@
 package com.ucb.mercadoapi.controller;
 
-import com.ucb.mercadoapi.database.model.ProdutoEntity;
+import com.ucb.mercadoapi.entity.ProdutoEntity;
 import com.ucb.mercadoapi.dto.ProdutoDTO;
 import com.ucb.mercadoapi.exception.NotFoundException;
 import com.ucb.mercadoapi.service.ProdutoService;

@@ -1,4 +1,4 @@
-package com.ucb.mercadoapi.database.model;
+package com.ucb.mercadoapi.entity;
 
 import lombok.*;
 

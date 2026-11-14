@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleException(NotFoundException ex) {
+    public ResponseEntity<ErrorResponse> handleException(Exception ex) {
         ErrorResponse response = ErrorResponse.builder()
                 .message(ex.getMessage())
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
