@@ -1,4 +1,4 @@
-INSERT INTO CARGO (nome)
+INSERT INTO CARGO (nome, permissa_admin)
 VALUES
-('USER'),
-("ADMIN");
+('USER', 0),
+("ADMIN", 1);

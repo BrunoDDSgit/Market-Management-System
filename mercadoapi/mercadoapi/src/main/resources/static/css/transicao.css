@@ -1,0 +1,22 @@
+
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root) {
+    animation: 700ms ease-out both subir-sair;
+}
+
+::view-transition-new(root) {
+    animation: 700ms ease-out both subir-entrar;
+}
+
+@keyframes subir-sair {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes subir-entrar {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

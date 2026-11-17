@@ -16,9 +16,11 @@ public class CargoEntity {
     @Id
     private int id;
     private String nome;
-    private Short permissaAdmin;
+    private Short permissa_admin;
 
     public CargoEntity(EnumCargo enumCargo) {
         this.id = enumCargo.getValue();
+        this.nome = enumCargo.name();
+        this.permissa_admin = enumCargo.getPermissaoAdmin();
     }
 }
