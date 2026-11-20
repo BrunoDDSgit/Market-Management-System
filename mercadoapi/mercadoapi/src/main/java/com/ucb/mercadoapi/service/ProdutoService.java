@@ -29,7 +29,6 @@ public class ProdutoService {
                 .build();
 
         PRODUTOS.add(novoProduto);
-
         return novoProduto;
     }
 
