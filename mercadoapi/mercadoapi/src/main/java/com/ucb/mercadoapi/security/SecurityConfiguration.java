@@ -28,10 +28,11 @@ public class SecurityConfiguration {
                         sessionManagement -> sessionManagement.sessionCreationPolicy(
                                 SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET, "/", "/home", "/login", "/cadastro", "/*.html", "/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/v1/produtos").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/", "/home", "/login", "/cadastro", "/produtos", "/*.html", "/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/login", "/produtos").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/register", "/produtos").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/produtos", "/categorias").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/produtos").hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securtyFilter, UsernamePasswordAuthenticationFilter.class)

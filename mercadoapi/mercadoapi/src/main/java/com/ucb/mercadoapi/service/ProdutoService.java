@@ -1,50 +1,79 @@
+
 package com.ucb.mercadoapi.service;
 
-import com.ucb.mercadoapi.entity.ProdutoEntity;
 import com.ucb.mercadoapi.dto.ProdutoDTO;
-import com.ucb.mercadoapi.exception.NotFoundException;
+import com.ucb.mercadoapi.entity.CategoriaEntity;
+import com.ucb.mercadoapi.entity.ProdutoEntity;
+import com.ucb.mercadoapi.repository.CategoriaRepository;
+import com.ucb.mercadoapi.repository.ProdutoRepository;
+
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProdutoService {
-    private static final List<ProdutoEntity> PRODUTOS = new ArrayList<ProdutoEntity>();
+
+    private final ProdutoRepository produtoRepository;
+    private final CategoriaRepository categoriaRepository;
 
     public List<ProdutoEntity> findAll() {
-        return new ArrayList<>(PRODUTOS);
+        return produtoRepository.findAll();
+    }
+
+    public ProdutoEntity findById(Integer id) {
+        return produtoRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Produto não encontrado"));
     }
 
     public ProdutoEntity createProduct(ProdutoDTO produtoDTO) {
 
-        Integer identificador = PRODUTOS.stream().mapToInt(ProdutoEntity::getId).max().orElse(0)+1;
+        CategoriaEntity categoria = categoriaRepository
+                .findById(produtoDTO.getCategoriaId())
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Categoria não encontrada"));
 
-        ProdutoEntity novoProduto = ProdutoEntity.builder()
-                .id(identificador)
-                .nome(produtoDTO.getNome())
-                .valor(produtoDTO.getValor())
-                .quantidade(produtoDTO.getQuantidade())
-                .build();
+        ProdutoEntity produto = new ProdutoEntity(
+                produtoDTO.getNome(),
+                produtoDTO.getDescricao(),
+                produtoDTO.getCodigoBarras(),
+                produtoDTO.getQuantidade(),
+                produtoDTO.getPreco(),
+                produtoDTO.getDesconto(),
+                produtoDTO.getValidade(),
+                categoria
+        );
 
-        PRODUTOS.add(novoProduto);
-        return novoProduto;
+        return produtoRepository.save(produto);
     }
 
-    public ProdutoEntity updateProduct(ProdutoDTO produtoDTO, Integer id) throws NotFoundException {
-        ProdutoEntity produto = PRODUTOS.stream()
-                .filter(p -> p.getId().equals(id)).findFirst()
-                .orElseThrow(() -> new NotFoundException("Produto não Encontrado"));
+    public ProdutoEntity updateProduct(ProdutoDTO produtoDTO, Integer id) {
+
+        ProdutoEntity produto = findById(id);
+
+        CategoriaEntity categoria = categoriaRepository
+                .findById(produtoDTO.getCategoriaId())
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Categoria não encontrada"));
 
         produto.setNome(produtoDTO.getNome());
-        produto.setValor(produtoDTO.getValor());
+        produto.setCodigoBarras(produtoDTO.getCodigoBarras());
         produto.setQuantidade(produtoDTO.getQuantidade());
+        produto.setPreco(produtoDTO.getPreco());
+        produto.setDesconto(produtoDTO.getDesconto());
+        produto.setValidade(produtoDTO.getValidade());
+        produto.setCategoria(categoria);
 
-        return produto;
+        return produtoRepository.save(produto);
     }
 
     public void removerProduto(Integer id) {
-        PRODUTOS.removeIf(p -> p.getId().equals(id));
+        ProdutoEntity produto = findById(id);
+        produtoRepository.delete(produto);
     }
 }

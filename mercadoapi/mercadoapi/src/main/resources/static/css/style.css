@@ -247,6 +247,11 @@ button {
     transition: all ease 200ms;
 }
 
+#btnAtualizar {
+    border-radius: 10px;
+    transition: all ease 200ms;
+}
+
 #btnModificar:hover {
     filter: brightness(0.95);
     transform: scale(1.035);
@@ -271,6 +276,11 @@ button {
     color: rgb(255, 255, 255);
 }
 
+#btnAtualizar:hover {
+    filter: brightness(0.95);
+    transform: scale(1.035);
+}
+
 #icon-adicionar:has(+#btnAdicionar:hover) {
     transform: rotate(360deg);
 }
@@ -280,6 +290,10 @@ button {
 }
 
 #icon-modificar:has(+#btnModificar:hover) {
+    transform: rotate(360deg);
+}
+
+#icon-atualizar:has(+#btnAtualizar:hover) {
     transform: rotate(360deg);
 }
 

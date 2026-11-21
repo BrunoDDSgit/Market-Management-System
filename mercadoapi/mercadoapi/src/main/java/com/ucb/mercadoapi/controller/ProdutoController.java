@@ -1,10 +1,12 @@
+
 package com.ucb.mercadoapi.controller;
 
-import com.ucb.mercadoapi.entity.ProdutoEntity;
 import com.ucb.mercadoapi.dto.ProdutoDTO;
-import com.ucb.mercadoapi.exception.NotFoundException;
+import com.ucb.mercadoapi.entity.ProdutoEntity;
 import com.ucb.mercadoapi.service.ProdutoService;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +19,16 @@ public class ProdutoController {
 
     private final ProdutoService produtoService;
 
-    @GetMapping()
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ProdutoEntity> findAll() {
         return produtoService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ProdutoEntity findById(@PathVariable Integer id) {
+        return produtoService.findById(id);
     }
 
     @PostMapping
@@ -29,16 +37,9 @@ public class ProdutoController {
         return produtoService.createProduct(produtoDTO);
     }
 
-    @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ProdutoEntity updateProduct(@PathVariable("id") Integer id,
-                                       @RequestBody ProdutoDTO produtoDTO) throws NotFoundException {
-        return produtoService.updateProduct(produtoDTO, id);
-    }
-
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteProduct(@PathVariable("id") Integer id) {
+    public void deleteProduct(@PathVariable Integer id) {
         produtoService.removerProduto(id);
     }
 }

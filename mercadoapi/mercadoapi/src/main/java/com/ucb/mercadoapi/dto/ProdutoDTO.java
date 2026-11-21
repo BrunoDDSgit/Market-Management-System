@@ -1,17 +1,22 @@
+
 package com.ucb.mercadoapi.dto;
 
 import lombok.*;
-
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@AllArgsConstructor
 @Builder
 public class ProdutoDTO {
     private String nome;
-    private BigDecimal valor;
-    private int quantidade;
+    private String descricao;
+    private String codigoBarras;
+    private Integer quantidade;
+    private BigDecimal preco;
+    private BigDecimal desconto;
+    private LocalDate validade;
+    private Integer categoriaId;
 }
