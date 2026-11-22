@@ -1,6 +1,6 @@
 package com.ucb.mercadoapi.security;
 
-import com.ucb.mercadoapi.repository.UserRepository;
+import com.ucb.mercadoapi.repository.UsuarioRepository;
 import com.ucb.mercadoapi.service.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -22,7 +22,7 @@ public class SecurtyFilter extends OncePerRequestFilter {
     TokenService tokenService;
 
     @Autowired
-    UserRepository  userRepository;
+    UsuarioRepository usuarioRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -30,7 +30,7 @@ public class SecurtyFilter extends OncePerRequestFilter {
         if (token != null) {
             var email = tokenService.validateToken(token);
             if (email != null && !email.isBlank()) {
-                UserDetails user = userRepository.findByEmail(email);
+                UserDetails user = usuarioRepository.findByEmail(email);
 
                 if (user != null) {
                     var authentication = new UsernamePasswordAuthenticationToken(

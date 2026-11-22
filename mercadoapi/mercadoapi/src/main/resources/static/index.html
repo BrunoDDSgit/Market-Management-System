@@ -55,7 +55,7 @@
                 <div class="acoes-produtos">
                     <div id="div-btn">
                         <svg id="icon-adicionar" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --> <path d="M6 12H18M12 6V18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                        <button id="btnAdicionar">
+                        <button id="btnAdicionar" onclick="abrirFormularioProduto()">
                             Adicionar Produto
                         </button>
                     </div>
@@ -82,46 +82,13 @@
 
             </section>
 
+
             <aside class="usuarios-container">
+
                 <h2>Usuários e Permissões</h2>
 
                 <div id="listaUsuarios">
-                    <div class="usuario-item">
-                        <div class="info-usuario">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --> <path d="M4 21C4 17.4735 6.60771 14.5561 10 14.0709M19.8726 15.2038C19.8044 15.2079 19.7357 15.21 19.6667 15.21C18.6422 15.21 17.7077 14.7524 17 14C16.2923 14.7524 15.3578 15.2099 14.3333 15.2099C14.2643 15.2099 14.1956 15.2078 14.1274 15.2037C14.0442 15.5853 14 15.9855 14 16.3979C14 18.6121 15.2748 20.4725 17 21C18.7252 20.4725 20 18.6121 20 16.3979C20 15.9855 19.9558 15.5853 19.8726 15.2038ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                            <div class="usuario-info">
-                                <strong>João Silva</strong>
-                                <span>Administrador</span>
-                            </div>
-                        </div>
-                        <span class="cargo administrador">
-                            Administrador
-                        </span>
-                    </div>
-                    <div class="usuario-item">
-                        <div class="info-usuario">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --> <path d="M4 21C4 17.4735 6.60771 14.5561 10 14.0709M19.8726 15.2038C19.8044 15.2079 19.7357 15.21 19.6667 15.21C18.6422 15.21 17.7077 14.7524 17 14C16.2923 14.7524 15.3578 15.2099 14.3333 15.2099C14.2643 15.2099 14.1956 15.2078 14.1274 15.2037C14.0442 15.5853 14 15.9855 14 16.3979C14 18.6121 15.2748 20.4725 17 21C18.7252 20.4725 20 18.6121 20 16.3979C20 15.9855 19.9558 15.5853 19.8726 15.2038ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                            <div class="usuario-info">
-                                <strong>Maria Souza</strong>
-                                <span>Gerente</span>
-                            </div>
-                        </div>
-                        <span class="cargo gerente">
-                            Gerente
-                        </span>
-                    </div>
-                    <div class="usuario-item">
-                        <div class="info-usuario">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --> <path d="M4 21C4 17.4735 6.60771 14.5561 10 14.0709M19.8726 15.2038C19.8044 15.2079 19.7357 15.21 19.6667 15.21C18.6422 15.21 17.7077 14.7524 17 14C16.2923 14.7524 15.3578 15.2099 14.3333 15.2099C14.2643 15.2099 14.1956 15.2078 14.1274 15.2037C14.0442 15.5853 14 15.9855 14 16.3979C14 18.6121 15.2748 20.4725 17 21C18.7252 20.4725 20 18.6121 20 16.3979C20 15.9855 19.9558 15.5853 19.8726 15.2038ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                            <div class="usuario-info">
-                                <strong>Pedro Santos</strong>
-                                <span>Funcionário</span>
-                            </div>
-                        </div>
-                        <span class="cargo funcionario">
-                            Funcionário
-                        </span>
-                    </div>
+                    <!-- Os usuários serão carregados pela API -->
                 </div>
 
                 <button id="btnVisualizarUsuarios">
@@ -129,6 +96,7 @@
                 </button>
 
             </aside>
+
         </section>
 
         <section class="historico-container">
@@ -185,6 +153,83 @@
                 </table>
             </div>
         </section>
+
+        <div id="modalProduto" class="modal-overlay">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h2>Adicionar Produto</h2>
+                    <button type="button" onclick="fecharFormularioProduto()">
+                        &times;
+                    </button>
+                </div>
+
+                <form id="formProduto">
+
+                    <div class="form-grid">
+
+                        <div class="campo">
+                            <label for="nome">Nome do produto</label>
+                            <input type="text" id="nome" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="codigoBarras">Código de barras</label>
+                            <input type="text" id="codigoBarras" required>
+                        </div>
+
+                        <div class="campo campo-completo">
+                            <label for="descricao">Descrição</label>
+                            <input type="text" id="descricao" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="quantidade">Quantidade</label>
+                            <input type="number" id="quantidade" min="0" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="preco">Preço</label>
+                            <input type="number" id="preco" min="0" step="0.01" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="desconto">Desconto (%)</label>
+                            <input type="number" id="desconto" min="0" max="100"
+                                   step="0.01" value="0" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="validade">Validade</label>
+                            <input type="date" id="validade">
+                        </div>
+
+                        <div class="campo campo-completo">
+                            <label for="categoriaId">Categoria</label>
+                            <select id="categoriaId" required>
+                                <option value="">Selecione uma categoria</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-acoes">
+                        <button type="button" onclick="fecharFormularioProduto()">
+                            Cancelar
+                        </button>
+
+                        <button type="submit">
+                            Cadastrar produto
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
 
     </main>
 

@@ -8,7 +8,7 @@ import com.ucb.mercadoapi.entity.StatusEntity;
 import com.ucb.mercadoapi.entity.UsuarioEntity;
 import com.ucb.mercadoapi.repository.CargoRepository;
 import com.ucb.mercadoapi.repository.StatusRepository;
-import com.ucb.mercadoapi.repository.UserRepository;
+import com.ucb.mercadoapi.repository.UsuarioRepository;
 import com.ucb.mercadoapi.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class AuthenticationController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    UserRepository repository;
+    UsuarioRepository repository;
 
     @Autowired
     CargoRepository cargoRepository;
