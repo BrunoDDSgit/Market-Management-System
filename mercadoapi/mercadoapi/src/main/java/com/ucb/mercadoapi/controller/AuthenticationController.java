@@ -6,11 +6,13 @@ import com.ucb.mercadoapi.dto.RegisterDTO;
 import com.ucb.mercadoapi.entity.CargoEntity;
 import com.ucb.mercadoapi.entity.StatusEntity;
 import com.ucb.mercadoapi.entity.UsuarioEntity;
+import com.ucb.mercadoapi.exception.ConflictException;
 import com.ucb.mercadoapi.repository.CargoRepository;
 import com.ucb.mercadoapi.repository.StatusRepository;
 import com.ucb.mercadoapi.repository.UsuarioRepository;
 import com.ucb.mercadoapi.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,13 +44,19 @@ public class AuthenticationController {
     TokenService tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody AuthenticationDTO data ) {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
-        var auth =  authenticationManager.authenticate(usernamePassword);
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody AuthenticationDTO data) {
+        var usernamePassword = new UsernamePasswordAuthenticationToken(
+                data.email(),
+                data.password()
+        );
 
-        var token = tokenService.generateToken((UsuarioEntity) auth.getPrincipal());
+        var auth = authenticationManager.authenticate(usernamePassword);
+
+        var token = tokenService.generateToken(
+                (UsuarioEntity) auth.getPrincipal()
+        );
+
         return ResponseEntity.ok(new LoginResponseDTO(token));
-
     }
 
     @PostMapping("/register")
@@ -56,7 +64,7 @@ public class AuthenticationController {
             @RequestBody RegisterDTO data) {
 
         if (repository.findByEmail(data.email()) != null) {
-            return ResponseEntity.badRequest().build();
+            throw new ConflictException("Este e-mail já está cadastrado.");
         }
 
         CargoEntity cargo = cargoRepository.findByNome("USER")
@@ -70,7 +78,7 @@ public class AuthenticationController {
 
         this.repository.save(usuario);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/me")
