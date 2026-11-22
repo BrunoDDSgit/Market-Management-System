@@ -14,8 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("auth")
@@ -71,16 +74,14 @@ public class AuthenticationController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> usuarioLogado(
-            org.springframework.security.core.Authentication authentication
-    ) {
+    public ResponseEntity<?> usuarioLogado(Authentication authentication) {
+
         UsuarioEntity usuario = (UsuarioEntity) authentication.getPrincipal();
 
-        return ResponseEntity.ok(
-                java.util.Map.of(
-                        "nome", usuario.getNome(),
-                        "cargo", usuario.getCargo().getNome()
-                )
-        );
+        return ResponseEntity.ok(Map.of(
+                "nome", usuario.getNome(),
+                "email", usuario.getEmail(),
+                "cargo", usuario.getCargo().getNome()
+        ));
     }
 }

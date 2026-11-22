@@ -51,6 +51,43 @@ body {
     justify-content: center;
 }
 
+.header-usuario {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.btn-logout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 9px 16px;
+
+    background-color: #fce3e3;
+    color: #b52e2e;
+
+    border: 1px solid #f3caca;
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-logout:hover {
+    background-color: #f5cccc;
+    border-color: #e9aaaa;
+}
+
+.btn-logout:active {
+    transform: scale(0.97);
+}
+
 .texto-logo {
     width: clamp(6em, 11.2vw, 11.2em);
 }
@@ -58,15 +95,97 @@ body {
 .logo {
     width: clamp(2.96rem, 5.6vw, 5.6rem);
 }
+
 .usuario-logado {
-    background-color: #EEF1FF;
-    color: var(--cor-principal-escura);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 10px 16px;
+    background-color: var(--cor-fundo);
+    border: 1px solid var(--cor-borda);
+    border-radius: 10px;
+}
 
-    padding: 10px 18px;
-    border-radius: 20px;
-
+#nome-usuario {
+    color: var(--cor-texto);
+    font-weight: 600;
     font-size: 14px;
-    font-weight: bold;
+}
+
+#email-usuario {
+    color: var(--cor-texto);
+    opacity: 0.75;
+    font-size: 13px;
+}
+
+#cargo-usuario {
+    background-color: var(--cor-principal);
+    color: var(--cor-texto);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+.historico-acao {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.acesso-restrito {
+    text-align: center;
+    padding: 30px 15px !important;
+    color: var(--cor-texto);
+    opacity: 0.75;
+    font-size: 14px;
+}
+
+.acesso-restrito i {
+    margin-right: 8px;
+    color: var(--cor-principal-escura);
+}
+
+.acao-cadastro {
+    background-color: #e1f3e5;
+    color: #287a3d;
+}
+
+.acao-edicao {
+    background-color: #fff0d5;
+    color: #9a6500;
+}
+
+.acao-exclusao {
+    background-color: #fce3e3;
+    color: #b52e2e;
+}
+
+#listaHistorico td {
+    padding: 12px;
+    vertical-align: middle;
+}
+
+#listaHistorico tr {
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+#listaHistorico tr:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 600px) {
+    .usuario-logado {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 6px;
+    }
 }
 
 .container {
@@ -133,6 +252,43 @@ body {
     border-color: var(--cor-principal);
     box-shadow: 0 0 0 3px rgba(82, 105, 201, 0.10);
 }
+
+.tabela-container {
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: auto;
+    border-radius: 10px;
+}
+
+.tabela-produtos {
+    max-height: 350px;
+}
+
+.tabela-historico {
+    max-height: 300px;
+}
+
+.tabela-container thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: var(--cor-principal);
+}
+
+.tabela-container::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.tabela-container::-webkit-scrollbar-thumb {
+    background-color: #b8c1d8;
+    border-radius: 10px;
+}
+
+.tabela-container::-webkit-scrollbar-track {
+    background-color: var(--cor-fundo);
+}
+
 
 .tabela-container {
     width: 100%;
@@ -222,6 +378,11 @@ button {
 }
 
 #div-btn #icon-modificar {
+    stroke: var(--cor-principal);
+    transition: all ease 800ms;
+}
+
+#div-btn #icon-atualizar {
     stroke: var(--cor-principal);
     transition: all ease 800ms;
 }

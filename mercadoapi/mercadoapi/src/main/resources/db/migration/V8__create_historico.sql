@@ -1,0 +1,8 @@
+CREATE TABLE historico (
+   id INT AUTO_INCREMENT PRIMARY KEY,
+   horario DATETIME NOT NULL,
+   tipo_acao VARCHAR(30) NOT NULL,
+   usuario VARCHAR(255) NOT NULL,
+   cargo VARCHAR(100) NOT NULL,
+   mensagem VARCHAR(500) NOT NULL
+);

@@ -8,6 +8,7 @@
     <title>Sistema de Estoque</title>
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css">
 </head>
 
 <body>
@@ -16,8 +17,15 @@
             <img src="img/Logo.png" alt="" class="logo">
             <img src="img/Texto.png" alt="" class="texto-logo">
         </div>
-        <div class="usuario-logado">
-            <span id="cargo-usuario"></span>
+        <div class="header-usuario">
+            <div class="usuario-logado">
+                <span id="nome-usuario"></span>
+                <span id="email-usuario"></span>
+                <span id="cargo-usuario"></span>
+            </div>
+            <button id="btnLogout" class="btn-logout">
+                Sair
+            </button>
         </div>
     </header>
 
@@ -34,8 +42,8 @@
                         >
                 </div>
 
-                <div class="tabela-container">
-                    <table id="tabelaProdutos">
+                <div class="tabela-container tabela-produtos">
+                    <table>
                         <thead>
                             <tr>
                                 <th>Produto</th>
@@ -75,7 +83,7 @@
                     </div>
 
                     <div id="div-btn">
-                        <svg id="icon-atualizar" fill="#000000" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 489.711 489.711" xml:space="preserve"><gstroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --> <g> <g> <path d="M112.156,97.111c72.3-65.4,180.5-66.4,253.8-6.7l-58.1,2.2c-7.5,0.3-13.3,6.5-13,14c0.3,7.3,6.3,13,13.5,13 c0.2,0,0.3,0,0.5,0l89.2-3.3c7.3-0.3,13-6.2,13-13.5v-1c0-0.2,0-0.3,0-0.5v-0.1l0,0l-3.3-88.2c-0.3-7.5-6.6-13.3-14-13 c-7.5,0.3-13.3,6.5-13,14l2.1,55.3c-36.3-29.7-81-46.9-128.8-49.3c-59.2-3-116.1,17.3-160,57.1c-60.4,54.7-86,137.9-66.8,217.1 c1.5,6.2,7,10.3,13.1,10.3c1.1,0,2.1-0.1,3.2-0.4c7.2-1.8,11.7-9.1,9.9-16.3C36.656,218.211,59.056,145.111,112.156,97.111z"></path> <path d="M462.456,195.511c-1.8-7.2-9.1-11.7-16.3-9.9c-7.2,1.8-11.7,9.1-9.9,16.3c16.9,69.6-5.6,142.7-58.7,190.7 c-37.3,33.7-84.1,50.3-130.7,50.3c-44.5,0-88.9-15.1-124.7-44.9l58.8-5.3c7.4-0.7,12.9-7.2,12.2-14.7s-7.2-12.9-14.7-12.2l-88.9,8 c-7.4,0.7-12.9,7.2-12.2,14.7l8,88.9c0.6,7,6.5,12.3,13.4,12.3c0.4,0,0.8,0,1.2-0.1c7.4-0.7,12.9-7.2,12.2-14.7l-4.8-54.1 c36.3,29.4,80.8,46.5,128.3,48.9c3.8,0.2,7.6,0.3,11.3,0.3c55.1,0,107.5-20.2,148.7-57.4 C456.056,357.911,481.656,274.811,462.456,195.511z"></path> </g> </g> </g></svg>
+                        <svg id="icon-atualizar" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --> <path fill="var(--ci-primary-color, #000000)" d="M265.614,206.387H456V16H424V149.887L397.863,123.75c-79.539-79.539-208.96-79.54-288.5,0s-79.539,208.96,0,288.5a204.232,204.232,0,0,0,288.5,0l-22.627-22.627c-67.063,67.063-176.182,67.063-243.244,0s-67.063-176.183,0-243.246,176.182-67.063,243.245,0l28.01,28.01H265.614Z" class="ci-primary"></path> </g></svg>
                         <button id="btnAtualizar">Atualizar Tabela</button>
                     </div>
                 </div>
@@ -88,7 +96,6 @@
                 <h2>Usuários e Permissões</h2>
 
                 <div id="listaUsuarios">
-                    <!-- Os usuários serão carregados pela API -->
                 </div>
 
                 <button id="btnVisualizarUsuarios">
@@ -101,55 +108,19 @@
 
         <section class="historico-container">
             <h2>Histórico de Alterações</h2>
-            <div class="tabela-container">
-                <table id="tabelaHistorico">
+            <div class="tabela-container tabela-historico">
+                <table>
                     <thead>
-                        <tr>
-                            <th>Horário</th>
-                            <th>Ícone</th>
-                            <th>Usuário</th>
-                            <th>Cargo</th>
-                            <th>Mensagem de alteração</th>
-                        </tr>
+                    <tr>
+                        <th>Data e horário</th>
+                        <th>Usuário</th>
+                        <th>Cargo</th>
+                        <th>Operação</th>
+                        <th>Descrição</th>
+                    </tr>
                     </thead>
-                    <tbody id="listaHistorico">
-                        <tr>
-                            <td>14:30</td>
-                            <td><svg id="icon-adicionar" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --> <path d="M6 12H18M12 6V18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></td>
-                            <td>João Silva</td>
-                            <td>Administrador</td>
-                            <td>Produto "Chocolate" adicionado ao estoque.</td>
-                        </tr>
-                        <tr>
-                            <td>15:10</td>
-                            <td><svg id="icon-modificar" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --> <path d="M11.5 10.5L14.5 13.5M21.4999 6.49998L12.4688 15.5312C11.6403 16.3596 10.2972 16.3596 9.46875 15.5312C8.64032 14.7027 8.64032 13.3596 9.46875 12.5312L18.4999 3.49998C19.3283 2.67158 20.6714 2.67155 21.4999 3.49992C22.3284 4.32834 22.3284 5.67153 21.4999 6.49998ZM10.3398 17.75C10.3398 19.545 8.88477 21 7.08984 21H2.5L2.7103 20.8949C3.74629 20.3769 4.26276 19.1915 3.93667 18.08C3.87245 17.8612 3.83395 17.6335 3.85777 17.4067C4.02929 15.7732 5.41089 14.5 7.08984 14.5C8.88477 14.5 10.3398 15.9551 10.3398 17.75Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></td>
-                            <td>Maria Souza</td>
-                            <td>Gerente</td>
-                            <td>Quantidade do produto "Refrigerante" alterada de 10 para 8.</td>
-                        </tr>
-                        <tr>
-                            <td>16:20</td>
-                            <td><svg id="icon-excluir" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --> <path d="M18 6L17.1991 18.0129C17.129 19.065 17.0939 19.5911 16.8667 19.99C16.6666 20.3412 16.3648 20.6235 16.0011 20.7998C15.588 21 15.0607 21 14.0062 21H9.99377C8.93927 21 8.41202 21 7.99889 20.7998C7.63517 20.6235 7.33339 20.3412 7.13332 19.99C6.90607 19.5911 6.871 19.065 6.80086 18.0129L6 6M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6M14 10V17M10 10V17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></td>
-                            <td>Pedro Santos</td>
-                            <td>Funcionário</td>
-                            <td>Produto "Biscoito" removido do estoque.</td>
-                        </tr>
-                        <tr>
-                            <td>17:05</td>
-                            <td><svg id="icon-modificar" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --> <path d="M11.5 10.5L14.5 13.5M21.4999 6.49998L12.4688 15.5312C11.6403 16.3596 10.2972 16.3596 9.46875 15.5312C8.64032 14.7027 8.64032 13.3596 9.46875 12.5312L18.4999 3.49998C19.3283 2.67158 20.6714 2.67155 21.4999 3.49992C22.3284 4.32834 22.3284 5.67153 21.4999 6.49998ZM10.3398 17.75C10.3398 19.545 8.88477 21 7.08984 21H2.5L2.7103 20.8949C3.74629 20.3769 4.26276 19.1915 3.93667 18.08C3.87245 17.8612 3.83395 17.6335 3.85777 17.4067C4.02929 15.7732 5.41089 14.5 7.08984 14.5C8.88477 14.5 10.3398 15.9551 10.3398 17.75Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></td>
-                            <td>João Silva</td>
-                            <td>Administrador</td>
-                            <td>Preço do produto "Leite" alterado de R$ 5,00 para R$ 4,50.</td>
-                        </tr>
-                        <tr>
-                            <td>17:40</td>
-                            <td><svg id="icon-adicionar" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --> <path d="M6 12H18M12 6V18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></td>
-                            <td>Maria Souza</td>
-                            <td>Gerente</td>
-                            <td>Produto "Biscoito" adicionado ao estoque.</td>
-                        </tr>
-                    </tbody>
 
+                    <tbody id="listaHistorico"></tbody>
                 </table>
             </div>
         </section>

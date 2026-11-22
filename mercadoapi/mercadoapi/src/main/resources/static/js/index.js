@@ -10,6 +10,7 @@ let produtoSelecionado = null;
 let produtoEmEdicaoId = null;
 let cargoUsuario = null;
 let nomeUsuario = null;
+let emailUsuario = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -20,9 +21,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     document.getElementById("cargo-usuario").innerText=cargoUsuario;
+    document.getElementById("nome-usuario").innerText = nomeUsuario;
+    document.getElementById("email-usuario").innerText = emailUsuario;
 
     carregarProdutos();
     carregarUsuarios();
+
+    if (cargoUsuario === "ADMIN") {
+        carregarHistorico();
+    } else {
+        document.getElementById("listaHistorico").innerHTML = `
+        <tr>
+            <td colspan="5" class="acesso-restrito">
+                <i class="fa-solid fa-lock"></i>
+                Histórico disponível somente para administradores.
+            </td>
+        </tr>
+    `;
+    }
+
 
     if (new URLSearchParams(window.location.search).get("modal") === "produto") {
         document.getElementById("modalProduto").style.display = "flex";
@@ -33,6 +50,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("btnVisualizarUsuarios").style.display="none";
         return;
     }
+
+
 });
 
 function obterHeaders() {
@@ -121,6 +140,9 @@ document.getElementById("formProduto").addEventListener("submit", async (event) 
         fecharFormularioProduto();
 
         await carregarProdutos();
+        if (cargoUsuario === "ADMIN") {
+            carregarHistorico();
+        }
 
     } catch (erro) {
         console.error("Erro ao salvar produto:", erro);
@@ -316,6 +338,34 @@ async function carregarUsuarios() {
     }
 }
 
+async function carregarHistorico() {
+
+    const listaHistorico = document.getElementById("listaHistorico");
+
+    try {
+        const resposta = await fetch("http://localhost:8080/historico", {
+            headers: obterHeaders()
+        });
+
+        if (!resposta.ok) {
+            throw new Error("Não foi possível carregar o histórico.");
+        }
+
+        const historico = await resposta.json();
+
+        exibirHistorico(historico);
+
+    } catch (erro) {
+        console.error("Erro ao carregar histórico:", erro);
+
+        listaHistorico.innerHTML = `
+            <tr>
+                <td colspan="5">Erro ao carregar o histórico.</td>
+            </tr>
+        `;
+    }
+}
+
 function exibirUsuarios() {
 
     const lista = document.getElementById("listaUsuarios");
@@ -392,6 +442,63 @@ function exibirUsuarios() {
     botao.style.display = "block";
 }
 
+function exibirHistorico(historico) {
+
+    const listaHistorico = document.getElementById("listaHistorico");
+
+    listaHistorico.innerHTML = "";
+
+    if (historico.length === 0) {
+        listaHistorico.innerHTML = `
+            <tr>
+                <td colspan="5">Nenhuma alteração registrada.</td>
+            </tr>
+        `;
+        return;
+    }
+
+    historico.forEach(registro => {
+
+        const linha = document.createElement("tr");
+
+        const horario = registro.horario
+            ? new Date(registro.horario).toLocaleString("pt-BR")
+            : "Não informado";
+
+        const celulas = [
+            horario,
+            registro.usuario,
+            registro.cargo,
+            registro.tipoAcao,
+            registro.mensagem
+        ];
+
+        celulas.forEach((valor, indice) => {
+
+            const celula = document.createElement("td");
+
+            if (indice === 3) {
+                const etiqueta = document.createElement("span");
+
+                etiqueta.classList.add(
+                    "historico-acao",
+                    `acao-${String(valor).toLowerCase()}`
+                );
+
+                etiqueta.textContent = valor || "Não informado";
+                celula.appendChild(etiqueta);
+
+            } else {
+                celula.textContent = valor ?? "Não informado";
+            }
+
+            linha.appendChild(celula);
+        });
+
+        listaHistorico.appendChild(linha);
+    });
+}
+
 document.getElementById("btnVisualizarUsuarios").addEventListener("click", () => {
 
     mostrarTodosUsuarios = !mostrarTodosUsuarios;
@@ -444,6 +551,9 @@ document.getElementById("btnExcluir").addEventListener("click", async () => {
         produtoSelecionado = null;
 
         await carregarProdutos();
+        if (cargoUsuario === "ADMIN") {
+            carregarHistorico();
+        }
 
     } catch (erro) {
         console.error("Erro ao excluir produto:", erro);
@@ -508,12 +618,26 @@ document.getElementById("btnAtualizar").addEventListener("click", async () => {
 
     try {
         await carregarProdutos();
+        if (cargoUsuario === "ADMIN") {
+            carregarHistorico();
+        }
 
     } finally {
         botao.disabled = false;
         botao.textContent = "Atualizar Tabela";
     }
 })
+
+document.getElementById("btnLogout").addEventListener("click", () => {
+
+    const confirmar = confirm("Tem certeza de que deseja sair?");
+
+    if (!confirmar) return;
+
+    localStorage.removeItem("token");
+
+    window.location.replace("/login");
+});
 
 async function carregarUsuarioAtual() {
     try {
@@ -529,6 +653,7 @@ async function carregarUsuarioAtual() {
 
         cargoUsuario = usuario.cargo;
         nomeUsuario = usuario.nome;
+        emailUsuario = usuario.email;
 
         console.log("Usuário logado:", usuario);
 

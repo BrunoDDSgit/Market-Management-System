@@ -91,6 +91,8 @@ public class SecurityConfiguration {
                     "/categorias/**"
             ).hasRole("ADMIN")
 
+            .requestMatchers("/historico/**").hasRole("ADMIN")
+
             .anyRequest().authenticated()
     )
 

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
 
-    private final CategoriaRepository categoriaRepository;
     private final UsuarioRepository usuarioRepository;
     private final CargoRepository cargoRepository;
     private final StatusRepository statusRepository;
@@ -30,31 +29,8 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        cadastrarCategorias();
         cadastrarAdministrador();
 
-    }
-
-    private void cadastrarCategorias() {
-
-        for (EnumCategoria categoriaEnum : EnumCategoria.values()) {
-
-            boolean existe = categoriaRepository.existsByNome(
-                    categoriaEnum.getNome()
-            );
-
-            if (!existe) {
-
-                CategoriaEntity categoria = new CategoriaEntity(
-                        categoriaEnum.getNome(),
-                        categoriaEnum.getDescricao()
-                );
-
-                categoriaRepository.save(categoria);
-            }
-        }
-
-        System.out.println("Categorias verificadas com sucesso!");
     }
 
     private void cadastrarAdministrador() {
