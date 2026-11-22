@@ -1,3 +1,4 @@
+
 package com.ucb.mercadoapi.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,35 +18,99 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+
     @Autowired
-    SecurtyFilter  securtyFilter;
+    SecurtyFilter securtyFilter;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        return http
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(
-                        sessionManagement -> sessionManagement.sessionCreationPolicy(
-                                SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET, "/", "/home", "/login", "/cadastro", "/produtos", "/usuarios", "/*.html", "/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register", "/produtos", "/usuarios", "/categorias").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/produtos/**", "/usuarios").hasRole("USER")
-                        .requestMatchers(HttpMethod.PUT, "/produtos/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.PUT, "/produtos/**").hasRole("USER")
-                        .anyRequest().authenticated()
-                )
-                .addFilterBefore(securtyFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        return http.csrf(csrf -> csrf.disable()).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authorizeHttpRequests(authorize -> authorize
+            .requestMatchers(
+                "/",
+                "/login",
+                "/cadastro",
+                "/login.html",
+                "/cadastro.html",
+                "/index.html",
+                "/home",
+                "/css/**",
+                "/js/**",
+                "/img/**",
+                "/favicon.ico"
+            ).permitAll()
+
+            .requestMatchers(
+                    HttpMethod.POST,
+                    "/auth/login",
+                    "/auth/register"
+            ).permitAll()
+
+            .requestMatchers(
+                    HttpMethod.GET,
+                    "/produtos",
+                    "/produtos/**",
+                    "/categorias",
+                    "/categorias/**"
+            ).hasRole("USER")
+
+            .requestMatchers(
+                    HttpMethod.PUT,
+                    "/produtos/**"
+            ).hasRole("USER")
+
+            .requestMatchers(
+                    HttpMethod.POST,
+                    "/produtos",
+                    "/produtos/**"
+            ).hasRole("ADMIN")
+
+            .requestMatchers(
+                    HttpMethod.DELETE,
+                    "/produtos",
+                    "/produtos/**"
+            ).hasRole("ADMIN")
+
+            .requestMatchers("/usuarios", "/usuarios/**")
+            .hasRole("ADMIN")
+
+            .requestMatchers(
+                    HttpMethod.POST,
+                    "/categorias",
+                    "/categorias/**"
+            ).hasRole("ADMIN")
+
+            .requestMatchers(
+                    HttpMethod.PUT,
+                    "/categorias/**"
+            ).hasRole("ADMIN")
+
+            .requestMatchers(
+                    HttpMethod.DELETE,
+                    "/categorias/**"
+            ).hasRole("ADMIN")
+
+            .anyRequest().authenticated()
+    )
+
+            .addFilterBefore(
+                    securtyFilter,
+                    UsernamePasswordAuthenticationFilter.class
+            )
+
+            .build();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration
+    ) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

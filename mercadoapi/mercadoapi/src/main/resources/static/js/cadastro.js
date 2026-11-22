@@ -36,6 +36,8 @@ formulario.addEventListener("submit", async (event) => {
         } else {
             alert("Erro ao cadastrar. Verifique se o e-mail já não está em uso.");
         }
+
+        window.location.href = "/login";
     } catch (erro) {
         console.error("Erro de conexão:", erro);
         alert("Não foi possível conectar ao servidor.");

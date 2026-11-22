@@ -1,14 +1,25 @@
 const token = localStorage.getItem("token");
+
 if (!token) {
-    window.location.href = "login.html";
+    window.location.replace("/login");
 }
 
 let todosUsuarios = [];
 let mostrarTodosUsuarios = false;
 let produtoSelecionado = null;
 let produtoEmEdicaoId = null;
+let cargoUsuario = null;
+let nomeUsuario = null;
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+
+    await carregarUsuarioAtual();
+
+    if (!cargoUsuario) {
+        return;
+    }
+
+    document.getElementById("cargo-usuario").innerText=cargoUsuario;
 
     carregarProdutos();
     carregarUsuarios();
@@ -18,6 +29,10 @@ document.addEventListener("DOMContentLoaded", () => {
         carregarCategorias();
     }
 
+    if (cargoUsuario !== "ADMIN") {
+        document.getElementById("btnVisualizarUsuarios").style.display="none";
+        return;
+    }
 });
 
 function obterHeaders() {
@@ -154,9 +169,11 @@ async function carregarProdutos() {
         console.log("Produtos recebidos:", produtos);
 
         exibirProdutos(produtos);
+        return true;
 
     } catch (erro) {
         console.error("Erro ao carregar produtos:", erro);
+        return false;
     }
 }
 
@@ -261,32 +278,41 @@ async function carregarCategorias() {
 }
 
 async function carregarUsuarios() {
+    const lista = document.getElementById("listaUsuarios");
 
     try {
-
         const resposta = await fetch("http://localhost:8080/usuarios", {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
+            headers: obterHeaders()
         });
 
-        console.log("Status usuários:", resposta.status);
+        if (resposta.status === 403) {
+            lista.innerHTML = `
+                <div class="sem-permissao">
+                    <h3>Acesso restrito</h3>
+                    <p>Você não tem autorização para visualizar os usuários.</p>
+                </div>
+            `;
+
+            return;
+        }
 
         if (!resposta.ok) {
-            throw new Error("Erro ao buscar usuários");
+            throw new Error("Erro ao buscar usuários.");
         }
 
         todosUsuarios = await resposta.json();
 
-        console.log("Usuários recebidos:", todosUsuarios);
-
         exibirUsuarios();
 
     } catch (erro) {
-
         console.error("Erro ao carregar usuários:", erro);
 
+        lista.innerHTML = `
+            <div class="sem-permissao">
+                <h3>Não foi possível carregar os usuários</h3>
+                <p>Tente novamente mais tarde.</p>
+            </div>
+        `;
     }
 }
 
@@ -374,7 +400,23 @@ document.getElementById("btnVisualizarUsuarios").addEventListener("click", () =>
 
 });
 
+document.getElementById("btnAdicionar").addEventListener("click", () => {
+
+    if (cargoUsuario !== "ADMIN") {
+        alert("Você não tem autorização para cadastrar produtos.");
+        return;
+    }
+
+    abrirFormularioProduto();
+
+});
+
 document.getElementById("btnExcluir").addEventListener("click", async () => {
+
+    if (cargoUsuario !== "ADMIN") {
+        alert("Você não tem autorização para excluir produtos.");
+        return;
+    }
 
     if (produtoSelecionado === null) {
         alert("Selecione um produto primeiro!");
@@ -458,10 +500,50 @@ document.getElementById("btnModificar").addEventListener("click", async () => {
     }
 });
 
+document.getElementById("btnAtualizar").addEventListener("click", async () => {
+    const botao = document.getElementById("btnAtualizar");
+
+    botao.disabled = true;
+    botao.textContent = "Atualizando...";
+
+    try {
+        await carregarProdutos();
+
+    } finally {
+        botao.disabled = false;
+        botao.textContent = "Atualizar Tabela";
+    }
+})
+
+async function carregarUsuarioAtual() {
+    try {
+        const resposta = await fetch("http://localhost:8080/auth/me", {
+            headers: obterHeaders()
+        });
+
+        if (!resposta.ok) {
+            throw new Error("Não foi possível identificar o usuário.");
+        }
+
+        const usuario = await resposta.json();
+
+        cargoUsuario = usuario.cargo;
+        nomeUsuario = usuario.nome;
+
+        console.log("Usuário logado:", usuario);
+
+    } catch (erro) {
+        console.error("Erro ao identificar usuário:", erro);
+
+        localStorage.removeItem("token");
+        window.location.replace("/login");
+    }
+}
+
 function logout() {
 
     localStorage.removeItem("token");
 
-    window.location.href = "login.html";
+    window.location.href = "/login";
 
 }

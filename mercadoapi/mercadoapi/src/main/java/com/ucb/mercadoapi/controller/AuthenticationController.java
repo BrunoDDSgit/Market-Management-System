@@ -15,10 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("auth")
@@ -71,5 +68,19 @@ public class AuthenticationController {
         this.repository.save(usuario);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> usuarioLogado(
+            org.springframework.security.core.Authentication authentication
+    ) {
+        UsuarioEntity usuario = (UsuarioEntity) authentication.getPrincipal();
+
+        return ResponseEntity.ok(
+                java.util.Map.of(
+                        "nome", usuario.getNome(),
+                        "cargo", usuario.getCargo().getNome()
+                )
+        );
     }
 }
